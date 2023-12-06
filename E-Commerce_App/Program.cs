@@ -1,3 +1,7 @@
+using E_Commerce_App.Data;
+using E_Commerce_App.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace E_Commerce_App
 {
     public class Program
@@ -7,6 +11,8 @@ namespace E_Commerce_App
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<AppDbContext>(
+                conf => conf.UseSqlServer(builder.Configuration.GetConnectionString("constr")));
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -29,6 +35,8 @@ namespace E_Commerce_App
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            AppDbIntializer.Seed(app);
 
             app.Run();
         }
