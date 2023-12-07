@@ -1,4 +1,5 @@
 ﻿using E_Commerce_App.Models;
+using E_Commerce_App.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,15 +7,16 @@ namespace E_Commerce_App.Controllers
 {
     public class ActorsController : Controller
     {
-        private readonly AppDbContext context;
+        private readonly IActorRepository ActorRepository;
 
-        public ActorsController(AppDbContext context)
+        public ActorsController(IActorRepository ActorRepository)
         {
-            this.context = context;
+            this.ActorRepository = ActorRepository;
         }
-        public async Task<IActionResult> Index()
+
+        public IActionResult Index()
         {
-            var allActors = await context.Actors.ToListAsync();
+            var allActors = ActorRepository.GetAll();
             return View(allActors);
         }
     }
