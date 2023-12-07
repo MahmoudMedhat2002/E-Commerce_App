@@ -14,8 +14,8 @@ namespace E_Commerce_App.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var data = await context.Actors.ToListAsync();
-            return View();
+            var allActors = await context.Actors.ToListAsync();
+            return View(allActors);
         }
     }
 }
