@@ -18,7 +18,7 @@
         @foreach (var item in Model) {
            <tr>
                <td class="align-middle">
-                   <img src="@item.ProfilePictureURL" class="rounded-circle" alt="@item.FullName"></img>
+                    <img src="@item.ProfilePictureURL" class="rounded-circle" alt="@item.FullName" style="max-width : 150px"></img>
                </td>
                <td class="align-middle">
                    @item.FullName

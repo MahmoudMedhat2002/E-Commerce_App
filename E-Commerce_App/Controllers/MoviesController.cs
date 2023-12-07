@@ -14,8 +14,8 @@ namespace E_Commerce_App.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allCinemas = await context.Producers.ToListAsync();
-            return View();
+            var allMovies = await context.Movies.Include(m => m.Cinema).ToListAsync();
+            return View(allMovies);
         }
     }
 }
