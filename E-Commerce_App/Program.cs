@@ -34,7 +34,7 @@ namespace E_Commerce_App
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Movies}/{action=Index}/{id?}");
 
             AppDbIntializer.Seed(app);
 
