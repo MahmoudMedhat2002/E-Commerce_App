@@ -33,7 +33,63 @@ namespace E_Commerce_App.Controllers
                 ActorRepository.Add(actor);
                 return RedirectToAction("Index");
             }
-            return View();
+            return View(actor);
         }
+
+        public IActionResult Details(int id)
+        {
+            Actor actor = ActorRepository.GetById(id);
+            if(actor != null)
+            {
+                return View(actor);
+            }
+            return View("NotFound");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Actor actor = ActorRepository.GetById(id);
+            if (actor != null)
+            {
+                return View(actor);
+            }
+            return View("NotFound");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id , Actor newactor)
+        {
+            if(ModelState.IsValid)
+            {
+                ActorRepository.update(id,newactor);
+                return RedirectToAction("Index");
+            }
+            return View(newactor);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            Actor actor = ActorRepository.GetById(id);
+            if (actor != null)
+            {
+                return View("Delete", actor);
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id , Actor delactor)
+        {
+            Actor actor = ActorRepository.GetById(id);
+            if(actor != null)
+            {
+                ActorRepository.delete(id);
+                return RedirectToAction("Index");
+            }
+            return View("NotFound");
+        }
+        
     }
 }
