@@ -19,5 +19,21 @@ namespace E_Commerce_App.Controllers
             var allActors = ActorRepository.GetAll();
             return View(allActors);
         }
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult New(Actor actor)
+        {
+            if(ModelState.IsValid)
+            {
+                ActorRepository.Add(actor);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
