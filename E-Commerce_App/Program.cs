@@ -15,6 +15,7 @@ namespace E_Commerce_App
             builder.Services.AddDbContext<AppDbContext>(
                 conf => conf.UseSqlServer(builder.Configuration.GetConnectionString("constr")));
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
+            builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();

@@ -1,4 +1,5 @@
 ﻿using E_Commerce_App.Models;
+using E_Commerce_App.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,16 +7,16 @@ namespace E_Commerce_App.Controllers
 {
     public class ProducersController : Controller
     {
+        private readonly IProducerRepository ProducerRepository;
 
-        private readonly AppDbContext context;
-
-        public ProducersController(AppDbContext context)
+        public ProducersController(IProducerRepository ProducerRepository)
         {
-            this.context = context;
+            this.ProducerRepository = ProducerRepository;
         }
+
         public async Task<IActionResult> Index()
         {
-            var allProducers = await context.Producers.ToListAsync();
+            var allProducers = await ProducerRepository.GetAllAsync();
             return View(allProducers);
         }
     }

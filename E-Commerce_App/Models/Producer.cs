@@ -1,6 +1,8 @@
-﻿namespace E_Commerce_App.Models
+﻿using E_Commerce_App.Data.Base;
+
+namespace E_Commerce_App.Models
 {
-    public class Producer
+    public class Producer : IEntityBase
     {
         public int Id { get; set; }
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace E_Commerce_App.Models
 {
-    public class Actor:IEntityBase
+    public class Actor : IEntityBase
     {
         public int Id { get; set; }
 
