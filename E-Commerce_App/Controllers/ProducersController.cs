@@ -19,5 +19,31 @@ namespace E_Commerce_App.Controllers
             var allProducers = await ProducerRepository.GetAllAsync();
             return View(allProducers);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            Producer producer = await ProducerRepository.GetByIdAsync(id);
+            if(producer != null)
+            {
+                return View(producer);
+            }
+            return View("NotFound");
+        }
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> New(Producer producer)
+        {
+            if (ModelState.IsValid)
+            {
+                await ProducerRepository.AddAsync(producer);
+                return RedirectToAction("Index");
+            }
+            return View(producer);
+        }
     }
 }
