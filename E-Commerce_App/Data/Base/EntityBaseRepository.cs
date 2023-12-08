@@ -1,30 +1,46 @@
-﻿namespace E_Commerce_App.Data.Base
+﻿using E_Commerce_App.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+namespace E_Commerce_App.Data.Base
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
-        public Task AddAsync(T actor)
+        private readonly AppDbContext context;
+
+        public EntityBaseRepository(AppDbContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
+        }
+        public async Task AddAsync(T entity)
+        {
+            await context.Set<T>().AddAsync(entity);
+            await context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await context.Set<T>().FirstOrDefaultAsync(a => a.Id == id);
+            EntityEntry entityentry = context.Entry<T>(entity);
+            entityentry.State = EntityState.Deleted;
+            await context.SaveChangesAsync();
         }
 
-        public Task<List<T>> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await context.Set<T>().ToListAsync();
         }
 
-        public Task<T> GetByIdAsync(int id)
+        public async Task<T> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await context.Set<T>().FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public Task UpdateAsync(int id, T newActor)
+        public async Task UpdateAsync(int id, T entity)
         {
-            throw new NotImplementedException();
+            EntityEntry entityentry = context.Entry<T>(entity);
+            entityentry.State = EntityState.Modified;
+            await context.SaveChangesAsync();
         }
     }
 }

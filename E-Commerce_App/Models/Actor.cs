@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using E_Commerce_App.Data.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace E_Commerce_App.Models
 {
-    public class Actor
+    public class Actor:IEntityBase
     {
         public int Id { get; set; }
 

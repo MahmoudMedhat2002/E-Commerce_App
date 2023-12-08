@@ -1,17 +1,10 @@
-﻿using E_Commerce_App.Models;
+﻿using E_Commerce_App.Data.Base;
+using E_Commerce_App.Models;
 
 namespace E_Commerce_App.Repository
 {
-    public interface IActorRepository
+    public interface IActorRepository : IEntityBaseRepository<Actor>
     {
-       Task<List<Actor>> GetAllAsync();
-
-       Task<Actor> GetByIdAsync(int id);
-
-       Task AddAsync(Actor actor);
-
-       Task UpdateAsync(int id , Actor newActor);
-
-       Task DeleteAsync(int id);
+       
     }
 }
