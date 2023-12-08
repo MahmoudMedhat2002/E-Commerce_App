@@ -1,4 +1,6 @@
 ﻿using E_Commerce_App.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace E_Commerce_App.Repository
 {
@@ -11,32 +13,32 @@ namespace E_Commerce_App.Repository
             this.context = context;
         }
 
-        public void Add(Actor actor)
+        public async Task AddAsync(Actor actor)
         {
-            context.Actors.Add(actor);
+            await context.Actors.AddAsync(actor);
             context.SaveChanges();
         }
 
-        public void delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            Actor actor = context.Actors.FirstOrDefault(a => a.Id == id);
+            Actor actor = await GetByIdAsync(id);
             context.Actors.Remove(actor);
             context.SaveChanges() ;
         }
 
-        public List<Actor> GetAll()
+        public async Task<List<Actor>> GetAllAsync()
         {
-            return context.Actors.ToList();
+            return await context.Actors.ToListAsync();
         }
 
-        public Actor GetById(int id)
+        public async Task<Actor> GetByIdAsync(int id)
         {
-            return context.Actors.FirstOrDefault(a => a.Id == id);
+            return await context.Actors.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public void update(int id, Actor newActor)
+        public async Task UpdateAsync(int id, Actor newActor)
         {
-            Actor oldActor = context.Actors.FirstOrDefault(a => a.Id == id);
+            Actor oldActor = await GetByIdAsync(id);
             oldActor.ProfilePictureURL = newActor.ProfilePictureURL;
             oldActor.FullName = newActor.FullName;
             oldActor.Bio = newActor.Bio;

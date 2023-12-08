@@ -14,9 +14,9 @@ namespace E_Commerce_App.Controllers
             this.ActorRepository = ActorRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var allActors = ActorRepository.GetAll();
+            var allActors = await ActorRepository.GetAllAsync();
             return View(allActors);
         }
         [HttpGet]
@@ -26,19 +26,19 @@ namespace E_Commerce_App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult New(Actor actor)
+        public async Task<IActionResult> New(Actor actor)
         {
             if(ModelState.IsValid)
             {
-                ActorRepository.Add(actor);
+                await ActorRepository.AddAsync(actor);
                 return RedirectToAction("Index");
             }
             return View(actor);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            Actor actor = ActorRepository.GetById(id);
+            Actor actor = await ActorRepository.GetByIdAsync(id);
             if(actor != null)
             {
                 return View(actor);
@@ -46,9 +46,9 @@ namespace E_Commerce_App.Controllers
             return View("NotFound");
         }
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            Actor actor = ActorRepository.GetById(id);
+            Actor actor = await ActorRepository.GetByIdAsync(id);
             if (actor != null)
             {
                 return View(actor);
@@ -57,20 +57,20 @@ namespace E_Commerce_App.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id , Actor newactor)
+        public async Task<IActionResult> Edit(int id , Actor newactor)
         {
             if(ModelState.IsValid)
             {
-                ActorRepository.update(id,newactor);
+               await ActorRepository.UpdateAsync(id,newactor);
                 return RedirectToAction("Index");
             }
             return View(newactor);
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            Actor actor = ActorRepository.GetById(id);
+            Actor actor = await ActorRepository.GetByIdAsync(id);
             if (actor != null)
             {
                 return View("Delete", actor);
@@ -80,12 +80,12 @@ namespace E_Commerce_App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id , Actor delactor)
+        public async Task<IActionResult> Delete(int id , Actor delactor)
         {
-            Actor actor = ActorRepository.GetById(id);
+            Actor actor = await ActorRepository.GetByIdAsync(id);
             if(actor != null)
             {
-                ActorRepository.delete(id);
+                await ActorRepository.DeleteAsync(id);
                 return RedirectToAction("Index");
             }
             return View("NotFound");

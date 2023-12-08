@@ -4,14 +4,14 @@ namespace E_Commerce_App.Repository
 {
     public interface IActorRepository
     {
-        List<Actor> GetAll();
+       Task<List<Actor>> GetAllAsync();
 
-        Actor GetById(int id);
+       Task<Actor> GetByIdAsync(int id);
 
-        void Add(Actor actor);
+       Task AddAsync(Actor actor);
 
-        void update(int id , Actor newActor);
+       Task UpdateAsync(int id , Actor newActor);
 
-        void delete(int id);
+       Task DeleteAsync(int id);
     }
 }
