@@ -45,5 +45,48 @@ namespace E_Commerce_App.Controllers
             }
             return View(producer);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Producer producer = await ProducerRepository.GetByIdAsync(id);
+            if (producer != null)
+            {
+                return View(producer);
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Edit(int id , Producer producer)
+        {
+            if(ModelState.IsValid)
+            {
+                await ProducerRepository.UpdateAsync(id , producer);
+                return RedirectToAction("Index");
+            }
+            return View(producer);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Producer producer = await ProducerRepository.GetByIdAsync(id);
+            if(producer != null)
+            {
+                return View(producer);
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id , Producer producer)
+        {
+            await ProducerRepository.DeleteAsync(id);
+            return RedirectToAction("Index");
+        }
     }
 }
