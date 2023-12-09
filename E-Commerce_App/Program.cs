@@ -14,6 +14,7 @@ namespace E_Commerce_App
             // Add services to the container.
             builder.Services.AddDbContext<AppDbContext>(
                 conf => conf.UseSqlServer(builder.Configuration.GetConnectionString("constr")));
+            builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
             builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
             builder.Services.AddControllersWithViews();
