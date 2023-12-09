@@ -1,9 +1,10 @@
-﻿using E_Commerce_App.Data.Enums;
+﻿using E_Commerce_App.Data.Base;
+using E_Commerce_App.Data.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace E_Commerce_App.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         public int Id { get; set; }
 

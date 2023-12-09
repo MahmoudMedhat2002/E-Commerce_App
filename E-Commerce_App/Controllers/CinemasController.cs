@@ -1,5 +1,6 @@
 ﻿using E_Commerce_App.Models;
 using E_Commerce_App.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,16 @@ namespace E_Commerce_App.Controllers
         {
             var allCinemas = await CinemaRepository.GetAllAsync();
             return View(allCinemas);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            Cinema cinema = await CinemaRepository.GetByIdAsync(id);
+            if (cinema != null)
+            {
+                return View(cinema);
+            }
+            return View("NotFound");
         }
 
         [HttpGet]
@@ -37,6 +48,56 @@ namespace E_Commerce_App.Controllers
             }
             return View(cinema);
         }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            Cinema cinema = await CinemaRepository.GetByIdAsync(id);
+            if(cinema != null)
+            {
+                return View(cinema);
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Edit(int id , Cinema cinema)
+        {
+            if(ModelState.IsValid)
+            {
+                await CinemaRepository.UpdateAsync(id, cinema);
+                return RedirectToAction("Index");
+            }
+            return View(cinema);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Cinema cinema = await CinemaRepository.GetByIdAsync(id);
+            if (cinema != null)
+            {
+                return View(cinema);
+            }
+            return View("NotFound");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> Delete(int id, Cinema cinema)
+        {
+            if (ModelState.IsValid)
+            {
+                await CinemaRepository.DeleteAsync(id);
+                return RedirectToAction("Index");
+            }
+            return View(cinema);
+        }
+
 
 
 

@@ -17,6 +17,7 @@ namespace E_Commerce_App
             builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
             builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
+            builder.Services.AddScoped<IMovieRepository, MovieRepository>();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
