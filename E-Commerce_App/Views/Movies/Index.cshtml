@@ -14,7 +14,7 @@
                             <p class="card-text">
                                 <h5 class="card-title">
                                     @item.Name
-                                    <a class="text-white float-end" href="#"><i class="bi bi-pencil-square"></i></a>
+                                    <a asp-controller="Movies" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end"><i class="bi bi-pencil-square"></i></a>
                                 </h5>
                             </p>
                         </div>
@@ -64,4 +64,6 @@
         </div>
     }
 </div>
+
+<partial name="_NewButton"/>
 

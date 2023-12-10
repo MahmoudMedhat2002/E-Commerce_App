@@ -9,5 +9,9 @@ namespace E_Commerce_App.Repository
         Task<Movie> GetMovieByIdAsync(int id);
 
         Task<MovieDropDownVM> GetMovieDropDownValues();
+
+        Task AddMovieAsync (MovieVM movie);
+
+        Task UpdateMovieAsync (MovieVM movie);
     }
 }

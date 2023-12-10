@@ -7,6 +7,7 @@ namespace E_Commerce_App.Models
 {
     public class MovieVM 
     {
+        public int Id { get; set; }
         [Required]
         [Display(Name = "Movie name")]
         public string Name { get; set; }
