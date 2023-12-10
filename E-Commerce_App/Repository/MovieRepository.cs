@@ -1,5 +1,6 @@
 ﻿using E_Commerce_App.Data.Base;
 using E_Commerce_App.Models;
+using E_Commerce_App.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce_App.Repository
@@ -22,6 +23,15 @@ namespace E_Commerce_App.Repository
                 FirstOrDefaultAsync(m => m.Id == id);
 
             return movie;
+        }
+
+        public async Task<MovieDropDownVM> GetMovieDropDownValues()
+        {
+            var response = new MovieDropDownVM();
+            response.Actors = await context.Actors.OrderBy(x => x.FullName).ToListAsync();
+            response.Producers = await context.Producers.OrderBy(x => x.FullName).ToListAsync();
+            response.Cinemas = await context.Cinemas.OrderBy(x => x.Name).ToListAsync();
+            return response;
         }
     }
 }

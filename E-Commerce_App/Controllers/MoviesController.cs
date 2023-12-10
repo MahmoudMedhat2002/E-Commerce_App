@@ -1,6 +1,7 @@
 ﻿using E_Commerce_App.Models;
 using E_Commerce_App.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce_App.Controllers
@@ -27,6 +28,15 @@ namespace E_Commerce_App.Controllers
                 return View(movie);
             }
             return View("Not Found");
+        }
+
+        public async Task<IActionResult> New()
+        {
+            var movieLists = await MovieRepository.GetMovieDropDownValues();
+            ViewBag.Cinemas = new SelectList(movieLists.Cinemas, "Id", "Name");
+            ViewBag.Producers = new SelectList(movieLists.Producers, "Id", "FullName");
+            ViewBag.Actors = new SelectList(movieLists.Actors, "Id", "FullName");
+            return View();
         }
     }
 }
