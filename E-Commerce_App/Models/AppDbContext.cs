@@ -10,6 +10,14 @@ namespace E_Commerce_App.Models
         public DbSet<Producer> Producers { get; set; }
         public DbSet<Actor_Movie> Actors_Movies { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<OrderItem> OrderItems { get; set; }
+
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+
+
+
         public AppDbContext(DbContextOptions options) : base(options)
         {
             
