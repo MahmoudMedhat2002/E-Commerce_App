@@ -1,4 +1,5 @@
 using E_Commerce_App.Data;
+using E_Commerce_App.Data.Cart;
 using E_Commerce_App.Models;
 using E_Commerce_App.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,11 @@ namespace E_Commerce_App
             builder.Services.AddScoped<IActorRepository, ActorRepository>();
             builder.Services.AddScoped<IProducerRepository, ProducerRepository>();
             builder.Services.AddScoped<IMovieRepository, MovieRepository>();
+			builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+			builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
+
+            builder.Services.AddSession();
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -34,6 +40,7 @@ namespace E_Commerce_App
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

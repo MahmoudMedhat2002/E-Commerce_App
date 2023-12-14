@@ -53,7 +53,7 @@
                                 <a class="btn btn-outline-primary float-right" asp-action="Details" asp-route-id = "@item.Id">
                                     <i class="bi bi-eye-fill"></i> Show Details
                                 </a>
-                                <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")">
+                                <a class="btn btn-success text-white @((DateTime.Now > item.EndDate) ? "disabled" : "")" asp-controller="Orders" asp-action="AddToShoppingCart" asp-route-id="@item.Id">
                                     <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("c"))
                                 </a>
                             </p>
