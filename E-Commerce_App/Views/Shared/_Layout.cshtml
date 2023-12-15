@@ -44,6 +44,19 @@
                     <ul class="navbar-nav">
                         @await Component.InvokeAsync("ShoppingCartSummary")
                     </ul>
+
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="bi bi-person-badge"></i> Hello User
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="ListAllOrders">
+                                    <i class="bi bi-list"></i> Orders
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -61,7 +74,14 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('.dropdown-toggle').dropdown();
+        });
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
