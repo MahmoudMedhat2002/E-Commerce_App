@@ -12,11 +12,21 @@ namespace E_Commerce_App.Controllers
         private readonly IMovieRepository MovieRepository;
 
         private readonly ShoppingCart ShoppingCart;
+        private readonly IOrderRepository OrderRepository;
 
-        public OrdersController(IMovieRepository MovieRepository , ShoppingCart ShoppingCart)
+        public OrdersController(IMovieRepository MovieRepository , ShoppingCart ShoppingCart , IOrderRepository OrderRepository)
         {
             this.ShoppingCart = ShoppingCart;
+            this.OrderRepository = OrderRepository;
             this.MovieRepository = MovieRepository;
+        }
+
+        public async Task<IActionResult> ListAllOrders()
+        {
+            string userId = "";
+            var orders = await OrderRepository.GetOrdersByUserIdAsync(userId);
+
+            return View(orders);
         }
         public IActionResult Index()
         {
@@ -58,6 +68,17 @@ namespace E_Commerce_App.Controllers
             return RedirectToAction("Index", "Orders");
         }
 
+        public async Task<IActionResult> CompleteOrder()
+        {
+            var items = ShoppingCart.GetShoppingCartItems();
+            string userId = "";
+            string userEmailAddress = "";
+
+            await OrderRepository.StoreOrderAsync(items, userId, userEmailAddress);
+            await ShoppingCart.ClearShoppingCartAsync();
+
+            return View();
+        }
 
     }
 

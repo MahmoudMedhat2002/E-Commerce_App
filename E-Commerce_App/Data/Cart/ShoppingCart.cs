@@ -1,6 +1,7 @@
 ﻿using E_Commerce_App.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using System.Runtime.CompilerServices;
 
 namespace E_Commerce_App.Data.Cart
 {
@@ -77,6 +78,13 @@ namespace E_Commerce_App.Data.Cart
         {
             var total = context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Select(n => n.Movie.Price * n.Amount).Sum();
             return total;
+        }
+
+        public async Task ClearShoppingCartAsync()
+        {
+            var items = await context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).ToListAsync();
+            context.ShoppingCartItems.RemoveRange(items);
+            await context.SaveChangesAsync();
         }
     }
 }
