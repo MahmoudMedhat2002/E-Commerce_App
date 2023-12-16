@@ -2,6 +2,8 @@ using E_Commerce_App.Data;
 using E_Commerce_App.Data.Cart;
 using E_Commerce_App.Models;
 using E_Commerce_App.Repository;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce_App
@@ -23,7 +25,14 @@ namespace E_Commerce_App
 			builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped(sc => ShoppingCart.GetShoppingCart(sc));
 
+            builder.Services.AddIdentity<ApplicationUser , IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
+            builder.Services.AddMemoryCache();
+
             builder.Services.AddSession();
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            });
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
@@ -42,6 +51,7 @@ namespace E_Commerce_App
             app.UseRouting();
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -49,6 +59,8 @@ namespace E_Commerce_App
                 pattern: "{controller=Movies}/{action=Index}/{id?}");
 
             AppDbIntializer.Seed(app);
+
+            AppDbIntializer.SeedUsersAndRolesAsync(app).Wait();
 
             app.Run();
         }
