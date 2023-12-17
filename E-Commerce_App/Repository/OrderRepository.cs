@@ -11,9 +11,15 @@ namespace E_Commerce_App.Repository
         {
             this.context = context;
         }
-        public async Task<List<Order>> GetOrdersByUserIdAsync(string userId)
+        public async Task<List<Order>> GetOrdersByUserIdAndRoleAsync(string userId , string userRole)
 		{
-			var orders = await context.Orders.Include(o => o.OrderItems).ThenInclude(oi => oi.Movie).Where(oi => oi.UserId == userId).ToListAsync();
+			var orders = await context.Orders.Include(o => o.OrderItems).ThenInclude(oi => oi.Movie).Include(oi => oi.User).ToListAsync();
+
+			if(userRole != "Admin")
+			{
+				orders = orders.Where(oi => oi.UserId == userId).ToList();
+            }
+
 			return orders;
 		}
 

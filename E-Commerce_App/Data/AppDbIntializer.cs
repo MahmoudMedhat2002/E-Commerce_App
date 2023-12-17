@@ -348,14 +348,14 @@ namespace E_Commerce_App.Data
                     await userManager.AddToRoleAsync(newAdminUser,UserRoles.Admin);
                 }
 
-                string appUserEmail = "user@ecommerce.com";
+                string appUserEmail = "user1@ecommerce.com";
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
                 if (appUser == null)
                 {
                     var newAppUser = new ApplicationUser()
                     {
-                        FullName = "Admin",
-                        UserName = "admin",
+                        FullName = "User",
+                        UserName = "user",
                         Email = appUserEmail,
                         EmailConfirmed = true,
                     };

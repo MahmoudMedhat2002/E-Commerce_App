@@ -10,11 +10,14 @@
             <div class="card mb-3" style="max-width: 540px;">
                 <div class="row g-0">
                     <div class="col-md-12">
-                        <div class="card-header text-white bg-info">
+                        <div class="card-header text-white bg-success">
                             <p class="card-text">
                                 <h5 class="card-title">
                                     @item.Name
-                                    <a asp-controller="Movies" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end"><i class="bi bi-pencil-square"></i></a>
+                                    @if(User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end"><i class="bi bi-pencil-square"></i></a>
+                                    }
                                 </h5>
                             </p>
                         </div>

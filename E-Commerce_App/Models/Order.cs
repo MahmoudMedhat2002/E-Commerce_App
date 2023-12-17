@@ -1,4 +1,6 @@
-﻿namespace E_Commerce_App.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace E_Commerce_App.Models
 {
     public class Order
     {
@@ -7,6 +9,8 @@
         public string Email { get; set; }
 
         public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
 
         public List<OrderItem> OrderItems { get; set; }
     }

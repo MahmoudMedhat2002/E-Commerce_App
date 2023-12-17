@@ -4,6 +4,7 @@ using E_Commerce_App.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Reflection;
+using System.Security.Claims;
 
 namespace E_Commerce_App.Controllers
 {
@@ -23,8 +24,9 @@ namespace E_Commerce_App.Controllers
 
         public async Task<IActionResult> ListAllOrders()
         {
-            string userId = "";
-            var orders = await OrderRepository.GetOrdersByUserIdAsync(userId);
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userRole = User.FindFirstValue(ClaimTypes.Role);
+            var orders = await OrderRepository.GetOrdersByUserIdAndRoleAsync(userId , userRole);
 
             return View(orders);
         }
@@ -71,8 +73,8 @@ namespace E_Commerce_App.Controllers
         public async Task<IActionResult> CompleteOrder()
         {
             var items = ShoppingCart.GetShoppingCartItems();
-            string userId = "";
-            string userEmailAddress = "";
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string userEmailAddress = User.FindFirstValue(ClaimTypes.Email);
 
             await OrderRepository.StoreOrderAsync(items, userId, userEmailAddress);
             await ShoppingCart.ClearShoppingCartAsync();
