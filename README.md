@@ -1,2 +1,2 @@
 # E-Commerce_App(E-Movies)
-#### platform for buying movie tickets
+#### app for buying movie tickets using Asp.net MVC
