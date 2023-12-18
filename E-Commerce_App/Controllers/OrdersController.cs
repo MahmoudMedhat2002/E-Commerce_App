@@ -1,6 +1,7 @@
 ﻿using E_Commerce_App.Data.Cart;
 using E_Commerce_App.Repository;
 using E_Commerce_App.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System.Reflection;
@@ -8,6 +9,8 @@ using System.Security.Claims;
 
 namespace E_Commerce_App.Controllers
 {
+    
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly IMovieRepository MovieRepository;
